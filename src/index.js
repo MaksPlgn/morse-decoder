@@ -39,6 +39,40 @@ const MORSE_TABLE = {
 
 function decode(expr) {
     // write your solution here
+    const arrCodedWords = expr.split('**********');
+    const arrDecodedWords = [];
+
+    arrCodedWords.forEach((codedWord, index) => {
+        arrCodedWords[index] = breakCodedWord(codedWord);
+    });
+
+    arrCodedWords.forEach((codedword, indexWord) => {
+        let decodedWord = '';
+        codedword.forEach((codedLetter, indexLetter) => {
+            
+            const morseCode = toMorseCode (codedLetter);
+            const decodedLetter = MORSE_TABLE[morseCode];
+
+            decodedWord += decodedLetter;    
+        });
+        arrDecodedWords.push(decodedWord);
+    });
+
+    return arrDecodedWords.join(' ');
+
+}
+
+function breakCodedWord (codedWord) {
+    const arrCodedLetters = codedWord.match(/\d{10}/g);
+
+    return arrCodedLetters;
+}
+
+function toMorseCode (codedLetter) {
+
+    return codedLetter.replace(/00/g, '')
+                      .replace(/10/g, '.')
+                      .replace(/11/g, '-');
 }
 
 module.exports = {
